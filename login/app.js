@@ -1,25 +1,31 @@
 const express = require('express');
+const body = require('body-parser');
 const app = express();
 
 const id = "admin";
 const pass = "123456";
 
+app.use(body.json());
+app.use(body.urlencoded({
+    extended:true
+}))
+
 app.get('/login',(req,res)=>{
-    console.log("login");
     res.send("Merhaba Anasayfa");
 })
 
-app.get('/login/:id/:pass',(req,res)=>{
-    console.log("login");
-    if(req.params.id !== id)
+app.post('/login',(req,res)=>{
+
+    if(req.body.id !== id)
     {
         res.status(404).send("hatalı şifre veya password");
     }
-    if(req.params.pass !== pass)
+    if(req.body.pass !== pass)
     {
         res.status(404).send("hatalı şifre veya password");
     }
-    res.send("Merhaba Anasayfa");
+    res.send("dönüyorr");
+    
 })
 
 app.listen(3000);
